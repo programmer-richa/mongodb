@@ -1,6 +1,11 @@
 package models
 
-import "gopkg.in/mgo.v2/bson"
+import (
+
+	"gopkg.in/mgo.v2/bson"
+	"github.com/programmer-richa/mongodb/helpers"
+
+)
 
 //User holds basic information regarding site user
 //MongoDB represents JSON documents in binary-encoded format called BSON behind the scenes.
@@ -15,4 +20,18 @@ type User struct {
 	Password         string        `json:"password" bson:"password"`
 	SubscribeToEmail bool          `json:"subscribe" bson:"subscribe"`
 	Id               bson.ObjectId `json:"id" bson:"_id"` // Data type  bson.ObjectId is for mongodb bson format
+}
+
+func(u User) Insert() error{
+
+	//store user to mongodb
+	err := helpers.InsertData(helpers.UserCollection, u)
+
+	// Return if error
+
+	if err != nil {
+		helpers.Logger(helpers.Error,err)
+		return err
+	}
+	return nil
 }
