@@ -13,6 +13,7 @@ const(
 	Fatal
 )
 
+// Logger to define severiety of an error and handle appropriately throughout the application.
 func Logger(msgType int,msg error){
 	switch msgType {
 	case Message:
@@ -24,4 +25,10 @@ func Logger(msgType int,msg error){
 	case Fatal:
 		log.Fatal(msg)
 	}
+}
+
+// LogMessage for printing msgs on console.
+// For debugging purpose.
+func LogMessage(msg ...interface{}){
+	fmt.Println(msg)
 }
