@@ -1,7 +1,6 @@
 package models
 
 import (
-
 	"gopkg.in/mgo.v2/bson"
 	"github.com/programmer-richa/mongodb/helpers"
 )
@@ -35,9 +34,43 @@ func(u User) Insert() error{
 	return nil
 }
 
+func (u User) Update() error {
+	err := helpers.UpdateData(helpers.UserCollection,u.Id,&u)
+	// Return if error
+	if err != nil {
+		helpers.Logger(helpers.Error,err)
+		return err
+	}
+	return nil
+}
+
+func  FindUser(id string) (User, error) {
+	u:=User{}
+	data,err:=helpers.FindByID(helpers.UserCollection,id)
+	// convert bson.M to User
+	bsonBytes, _ := bson.Marshal(data)
+	bson.Unmarshal(bsonBytes, &u)
+	return  u,err
+}
+
+
 // IsExistingUser examines if an user account is already registered
 // with the given email id.
 func IsExistingUser(email string) (found bool,err error) {
 	found,err=helpers.IsExistingRecord(helpers.UserCollection,bson.M{"email":email})
 	return found,err
 }
+
+// GetUserByEmail returns a user account information if is already registered
+// with the given email id.
+func GetUserByEmail(email string) ( User, error) {
+	u:=User{}
+	data,err:=helpers.GetaRecord(helpers.UserCollection,bson.M{"email":email})
+	// convert bson.M to User
+	bsonBytes, _ := bson.Marshal(data)
+	bson.Unmarshal(bsonBytes, &u)
+	return u,err
+}
+
+
+
