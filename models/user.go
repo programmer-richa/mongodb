@@ -4,7 +4,6 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 	"github.com/programmer-richa/mongodb/helpers"
-
 )
 
 //User holds basic information regarding site user
@@ -22,10 +21,10 @@ type User struct {
 	Id               bson.ObjectId `json:"id" bson:"_id"` // Data type  bson.ObjectId is for mongodb bson format
 }
 
+// Insert adds user information to database
 func(u User) Insert() error{
-
 	//store user to mongodb
-	err := helpers.InsertData(helpers.UserCollection, u)
+	err := helpers.InsertData(helpers.UserCollection,&u)
 
 	// Return if error
 
@@ -34,4 +33,11 @@ func(u User) Insert() error{
 		return err
 	}
 	return nil
+}
+
+// IsExistingUser examines if an user account is already registered
+// with the given email id.
+func IsExistingUser(email string) (found bool,err error) {
+	found,err=helpers.IsExistingRecord(helpers.UserCollection,bson.M{"email":email})
+	return found,err
 }
