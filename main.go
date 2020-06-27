@@ -33,6 +33,18 @@ func main(){
 	}else{
 		helpers.LogMessage("Record already exists")
 	}
+	// Fetch single user record
+	user,_ := models.GetUserByEmail("richa@gmail.com")
+	helpers.LogMessage(user.Name,user.Id.Hex())
+
+
+
+// Find user by id
+id:="5ef7017ccd982c1dbc12c669"
+record,_:=models.FindUser(id)
+	record.Name="Riya"
+	// Update record
+	record.Update()
 
 }
 
