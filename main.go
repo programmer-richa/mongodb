@@ -9,9 +9,9 @@ import (
 // Entry point of the program
 
 func main(){
-	found,_:=models.IsExistingUser("tc.ldh.richa@gmail.com")
+	found,_:=models.IsExistingUser("abc@gmail.com")
 	if !found {
-		user := models.User{Name: "Richa", Email: "tc.ldh.richa@gmail.com", Password: "12345", SubscribeToEmail: true}
+		user := models.User{Name: "Richa", Email: "abc@gmail.com", Password: "12345", SubscribeToEmail: true}
 		// Create bson id / Unique user id
 		user.Id = bson.NewObjectId()
 		// Call Insert Method to add record to database
@@ -22,9 +22,9 @@ func main(){
 		helpers.LogMessage("Record already exists")
 	}
 
-	found,_=models.IsExistingUser("richa@gmail.com")
+	found,_=models.IsExistingUser("newabc@gmail.com")
 	if !found {
-		user := models.User{Name: "Richa", Email: "richa@gmail.com", Password: "12345", SubscribeToEmail: true}
+		user := models.User{Name: "Richa", Email: "newabc@gmail.com", Password: "12345", SubscribeToEmail: true}
 		// Create bson id / Unique user id
 		user.Id = bson.NewObjectId()
 		// Call Insert Method to add record to database
@@ -34,7 +34,7 @@ func main(){
 		helpers.LogMessage("Record already exists")
 	}
 	// Fetch single user record
-	user,_ := models.GetUserByEmail("richa@gmail.com")
+	user,_ := models.GetUserByEmail("newabc@gmail.com")
 	helpers.LogMessage(user.Name,user.Id.Hex())
 
 
